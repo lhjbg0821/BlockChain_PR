@@ -1,0 +1,15 @@
+{
+  "name": "dog",
+  "dexcription": "This is awesome dog!",
+  "image": "https://gateway.pinata.cloud/ipfs/QmTJyQxLpW9Jt8UdG827bppgCSoEgRJ9A4h3iQN6RfmXPx",
+  "attributes": [
+    {
+      "trait_type": "Animal",
+      "value": "Dog"
+    },
+    {
+      "trait_type": "Acc",
+      "value": "neckalce"
+    }
+  ]
+}

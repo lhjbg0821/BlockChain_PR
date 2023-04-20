@@ -1,0 +1,15 @@
+{
+  "name": "Maenggu",
+  "dexcription": "This is awesome Maenggu!",
+  "image": "https://gateway.pinata.cloud/ipfs/QmYuZZbRrgkBt9AuhgX7nQTrfJCYvJmQnqQSRNfLMPCyyY",
+  "attributes": [
+    {
+      "trait_type": "type",
+      "value": "Zzanggu"
+    },
+    {
+      "trait_type": "Acc",
+      "value": "brownhair"
+    }
+  ]
+}

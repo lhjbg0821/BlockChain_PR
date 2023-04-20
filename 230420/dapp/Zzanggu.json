@@ -1,0 +1,15 @@
+{
+  "name": "Zzanggu",
+  "dexcription": "This is awesome Zzanggu!",
+  "image": "https://gateway.pinata.cloud/ipfs/QmSFhtHVwbMa34gWkJ584azgd9d9ajWR8U92pRWbEA7wXE",
+  "attributes": [
+    {
+      "trait_type": "type",
+      "value": "Zzanggu"
+    },
+    {
+      "trait_type": "Acc",
+      "value": "yellowhat"
+    }
+  ]
+}

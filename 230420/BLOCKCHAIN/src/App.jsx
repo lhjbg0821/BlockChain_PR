@@ -1,12 +1,23 @@
 import { useEffect } from "react";
 
 function App() {
-  useEffect(() => {
-    console.log(window.ethereum);
-  }, []);
+  const onClickAccount = async () => {
+    try {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      console.log(accounts);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="bg-red-100 min-h-screen flex justify-center items-center">
-      Hello, React
+      <button className="btn-style" onClick={onClickAccount}>
+        <img src={`${process.env.PUBLIC_URL}/images/metamask.png`} />
+      </button>
     </div>
   );
 }

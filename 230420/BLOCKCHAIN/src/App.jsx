@@ -6,14 +6,16 @@ import {
   NFT_ABI,
   NFT_ADDRESS,
 } from "./web3.config";
+import axios from "axios";
 
-const web3 = new Web3("https://rpc-mumbai.maticvigil.com");
+const web3 = new Web3(window.ethereum); // window.etherum : 메타마스크가 설치 안되어있으면 undefined로 뜸
 const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 const nftContract = new web3.eth.Contract(NFT_ABI, NFT_ADDRESS);
 
 function App() {
   const [account, setAccount] = useState("");
   const [myBalance, setMyBalance] = useState();
+  const [nftMetadata, setNftMetadata] = useState();
 
   // 지갑주소 가져오기
   const onClickAccount = async () => {
@@ -50,16 +52,45 @@ function App() {
 
   const onClickMint = async () => {
     try {
-      const result = await nftContract.methods
-        .mintNFT(
-          "https://gateway.pinata.cloud/ipfs/QmZ5ynCXHF5LyFwehgMxQQuxrq3x1hs7zcgo1bQ2QsRCmH"
-        )
-        .send({
-          from: account,
-        });
-      console.log(result);
+      if (!account) return;
 
-      // const web3 = new Web3(window.ethereum);
+      // 간단 버전
+      const uri =
+        "https://gateway.pinata.cloud/ipfs/QmZ5ynCXHF5LyFwehgMxQQuxrq3x1hs7zcgo1bQ2QsRCmH";
+
+      const result = await nftContract.methods
+        .mintNft(uri)
+        .send({ from: account });
+
+      if (!result.status) return;
+
+      // 복잡버전
+
+      // const result = await nftContract.methods
+      //   .mintNft(
+      //     "https://gateway.pinata.cloud/ipfs/QmZ5ynCXHF5LyFwehgMxQQuxrq3x1hs7zcgo1bQ2QsRCmH"
+      //   )
+      //   .send({ from: account });
+
+      // if (!result.status) return;
+
+      // const balanceOf = await nftContract.methods.balanceOf(account).call();
+
+      // const tokenOfOwnerByIndex = await nftContract.methods
+      //   .tokenOfOwnerByIndex(account, parseInt(balanceOf) - 1)
+      //   .call();
+
+      // const tokenURI = await nftContract.methods
+      //   .tokenURI(tokenOfOwnerByIndex)
+      //   .call();
+
+      // const response = await axios.get(tokenURI);
+
+      // setNftMetadata(response.data);
+
+      const response = await axios.get(uri);
+
+      setNftMetadata(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -87,6 +118,21 @@ function App() {
             </button>
           </div>
           <div className="flex items-center mt-4">
+            {nftMetadata && (
+              <div>
+                <img src={nftMetadata.image} alt="NFT" />
+                <div>Name : {nftMetadata.name}</div>
+                <div>Description : {nftMetadata.description}</div>
+                {nftMetadata.attributes.map((v, i) => {
+                  return (
+                    <div>
+                      <span>{v.trait_type} : </span>
+                      <span>{v.value}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             <button className="ml-2 btn-style" onClick={onClickMint}>
               민팅
             </button>
